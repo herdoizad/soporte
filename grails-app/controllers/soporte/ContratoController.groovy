@@ -107,11 +107,67 @@ class ContratoController extends Shield {
             }
         }
         contratoInstance.properties = params
+        contratoInstance.cliente=Cliente.findByCodigo(params.codigo_cliente)
+        def f = request.getFile('file')
+        def ext2
+        if(f && !f.empty){
+
+            def nombre = f.getOriginalFilename()
+            def parts2 = nombre.split("\\.")
+            nombre = ""
+            parts2.eachWithIndex { obj, i ->
+                if (i < parts2.size() - 1) {
+                    nombre += obj
+                } else {
+                    ext2 = obj
+                }
+            }
+            def path = servletContext.getRealPath("/") + "contratos/" + contratoInstance.cliente.codigo+ "/"
+            def pathLocal = "contrato/"
+            if(ext2 == 'pdf' || ext2 == 'PDF'){
+                /* upload */
+                new File(path).mkdirs()
+                if (f && !f.empty) {
+
+                    def fileName = f.getOriginalFilename()
+                    def ext
+
+                    def parts = fileName.split("\\.")
+                    fileName = ""
+                    parts.eachWithIndex { obj, i ->
+                        if (i < parts.size() - 1) {
+                            fileName += obj
+                        }
+                    }
+                    def name = "contrato_"+new Date().format("ddMMyyyyHHssmm")+"."+ext2
+                    def pathFile = path + name
+                    def fn = fileName
+                    def src = new File(pathFile)
+                    def i = 1
+                    while (src.exists()) {
+                        nombre = fn + "_" + i + "." + ext2
+                        pathFile = path + nombre
+                        src = new File(pathFile)
+                        i++
+                    }
+                    try {
+                        f.transferTo(new File(pathFile))
+                        contratoInstance.path=pathLocal+name
+
+
+                    } catch (e) {
+                        println "????????\n" + e + "\n???????????"
+                    }
+                }
+
+            }
+
+        }
         if (!contratoInstance.save(flush: true)) {
             render "ERROR*Ha ocurrido un error al guardar Contrato: " + renderErrors(bean: contratoInstance)
             return
         }
-        render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Contrato exitosa."
+        redirect(controller: 'cliente',action: 'verCliente',id: contratoInstance.cliente.codigo)
         return
     } //save para grabar desde ajax
 

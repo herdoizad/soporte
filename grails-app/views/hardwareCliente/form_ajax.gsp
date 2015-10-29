@@ -29,7 +29,9 @@
             <elm:fieldRapido claseLabel="col-sm-2" label="Observaciones" claseField="col-sm-10">
                 <g:textField name="observaciones" maxlength="250" class="form-control " value="${hardwareClienteInstance?.observaciones}"/>
             </elm:fieldRapido>
-
+            <elm:fieldRapido claseLabel="col-sm-2" label="Versión" claseField="col-sm-6">
+                <g:textField name="versionHardware" maxlength="10" class="form-control " value="${hardwareClienteInstance?.versionHardware}"/>
+            </elm:fieldRapido>
 
 
 

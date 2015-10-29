@@ -47,7 +47,7 @@
         <div class="col-md-1"><label>Contrato:</label></div>
         <div class="col-md-1">#${contrato?.numero}</div>
         <g:if test="${contrato}">
-            <div class="col-md-3">Del #${contrato?.inicio?.format("dd-MM-yyyy")} Al ${contrato?.fin?.format("dd-MM-yyyy")}</div>
+            <div class="col-md-3">Del ${contrato?.inicio?.format("dd-MM-yyyy")} Al ${contrato?.fin?.format("dd-MM-yyyy")}</div>
         </g:if>
         <div class="col-md-1"><label>Monto:</label></div>
         <div class="col-md-1" style="text-align: right"><g:formatNumber number="${contrato?.valor}" type="currency"/></div>
@@ -199,7 +199,7 @@
                         <td>${h.hardware.marca}</td>
                         <td style="text-align: center">${h.hardware.modelo}</td>
                         <td style="text-align: right">${h.cantidad}</td>
-                        <td style="text-align: center">${h.version}</td>
+                        <td style="text-align: center">${h.versionHardware}</td>
                     </tr>
                 </g:each>
                 </tbody>

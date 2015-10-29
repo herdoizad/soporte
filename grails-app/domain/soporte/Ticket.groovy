@@ -15,7 +15,8 @@ class Ticket {
     Date cierre
     String descripcion
     String observaciones
-
+    String fuente
+    String ip
     static auditable = [ignore: []]
 
     /**
@@ -39,6 +40,8 @@ class Ticket {
             cierre column:'fecha_cierre'
             descripcion column: 'descripcion'
             observaciones column:'observaciones'
+            fuente column: 'fuente'
+            ip column: 'ip'
         }
     }
 
@@ -47,5 +50,7 @@ class Ticket {
         descripcion(size: 1..200)
         cierre(nullable: true)
         observaciones(size: 1..1024,nullable: true,blank: true)
+        fuente(size: 1..1,nullable: true,blank: true)
+        ip(nullable: true,blank: true,size: 1..20)
     }
 }

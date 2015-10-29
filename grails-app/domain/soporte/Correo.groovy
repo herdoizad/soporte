@@ -1,11 +1,9 @@
 package soporte
 
-class Categoria {
+class Correo {
 
-    String descripcion
-    String codigo
-    String tipo
-
+    String tipo /*R o C*/
+    String email
     static auditable = [ignore: []]
 
     /**
@@ -13,24 +11,20 @@ class Categoria {
      */
     static mapping = {
 
-        table 'spt_categoria'
+        table 'spt_correo'
         cache usage: 'read-write', include: 'non-lazy'
         version false
         columns {
             id column:'id'
-            descripcion column: 'descripcion'
-            codigo column: 'codigo'
             tipo column: 'tipo'
+            email column: 'email'
         }
     }
 
 
     static constraints = {
-        descripcion(size: 1..100)
-        codigo(size: 1..5)
-        tipo(size: 1..1,nullable: true,blank: true)
-    }
-    String toString(){
-        return this.descripcion
+
+        email(size: 1..100,nullable: true,email: true)
+        tipo(size: 1..1)
     }
 }

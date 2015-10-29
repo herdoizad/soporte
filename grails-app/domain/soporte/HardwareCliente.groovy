@@ -8,7 +8,7 @@ class HardwareCliente {
     String observaciones
     String estado="A"  /*A-> activo */
     Date instalacion
-
+    String versionHardware
     static auditable = [ignore: []]
 
     /**
@@ -27,6 +27,7 @@ class HardwareCliente {
             observaciones column:'observaciones'
             estado column:'estado'
             instalacion column:'fecha_instalacion'
+            versionHardware column: 'version'
         }
     }
 
@@ -35,5 +36,6 @@ class HardwareCliente {
         observaciones(size: 1..250,nullable: true,blank: true)
         estado(size: 1..1)
         instalacion(nullable: true)
+        versionHardware(nullable: true,blank: true,size: 1..10)
     }
 }
