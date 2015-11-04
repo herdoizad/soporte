@@ -14,10 +14,10 @@
         <tr>
             <td>${c.numero}</td>
             <td>${c.tipo?.descripcion}</td>
-            <td><g:formatNumber number="${c.valor}" type="currency" currencySymbol="\$"/></td>
-            <td>${c.inicio?.format("dd-MM-yyyy")}</td>
-            <td>${c.fin?.format("dd-MM-yyyy")}</td>
-            <td>
+            <td style="text-align: right"><g:formatNumber number="${c.valor}" type="currency" currencySymbol="\$"/></td>
+            <td style="text-align: center">${c.inicio?.format("dd-MM-yyyy")}</td>
+            <td style="text-align: center">${c.fin?.format("dd-MM-yyyy")}</td>
+            <td style="text-align: center">
                 <g:link controller="contrato" action="nuevo" params="[id:c.id,cliente: cliente.codigo]" class="btn btn-sm btn-info">
                     <i class="fa fa-pencil"></i>
                 </g:link>

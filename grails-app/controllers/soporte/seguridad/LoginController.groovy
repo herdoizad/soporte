@@ -247,7 +247,7 @@ class LoginController {
             session.perfil = perfil
             session.usuarioKerberos = usuario.login
             session.tipo="usuario"
-
+            session.ip = request.remoteAddr
             cargarPermisos()
 
             redirect(controller: "inicio",action: "index")

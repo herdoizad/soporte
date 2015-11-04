@@ -18,10 +18,10 @@
     </style>
 </head>
 <body>
-<elm:container tipo="horizontal" titulo="Ticket #${ticket.id} - Estado: ${ticket.estado.descripcion.toUpperCase()}">
+<elm:container tipo="horizontal" titulo="Ticket #${ticket.id} - Estado: ${ticket.estado.descripcion.toUpperCase()} - ${ticket.cliente.nombre}">
     <div class="row fila">
         <div class="col-md-6">
-            <label>Cliente:</label> ${ticket.cliente.nombre} -
+
             <label>Prioridad:</label> <span class="${ticket.prioridad.codigo}">${ticket.prioridad.descripcion}</span> -
             <label>Categoria:</label> ${ticket.categoria.descripcion} -
             <label>Fecha:</label> ${ticket.fecha.format("dd-MM-yyyy HH:mm")}
@@ -31,13 +31,44 @@
             <label>${fechaLimite.format("dd-MM-yyyy HH:mm")}</label> <i class="fa fa-warning" style="color: orange"></i>
         </div>
         <g:if test="${accciones.size()>0}">
+            <g:form action="cambiarEstado_ajax" class="frm-estado">
+                <input type="hidden" id="condicion" name="estado">
+                <input type="hidden"  name="id" value="${ticket.id}">
+            </g:form>
+            <g:if test="${ticket.estado.codigo=='P01'}">
+                <div class="col-md-1">
+                    <a href="#" id="cerrar" class="btn btn-success btn-sm">
+                        <i class="fa fa-check"></i> Cerrar
+                    </a>
+                </div>
+            </g:if>
+            <g:if test="${ticket.estado.codigo=='P02'}">
+                <div class="col-md-1">
+                    <a href="#" id="abrir" class="btn btn-danger btn-sm">
+                        <i class="fa fa-unlock"></i> Abrir
+                    </a>
+                </div>
+            </g:if>
+        </g:if>
+    </div>
+
+    <div class="row fila">
+        <div class="col-md-1">
+            <label>Estado:</label>
+        </div>
+        <div class="col-md-2">
+            ${ticket.estado.descripcion} <i class="fa fa-warning" style="color: orange"></i>
+        </div>
+        <g:if test="${ticket.estado.codigo=='P02'}">
             <div class="col-md-1">
-                <a href="#" id="cerrar" class="btn btn-success btn-sm">
-                    <i class="fa fa-check"></i> Cerrar
-                </a>
+                <label>Cerrado el:</label>
+            </div>
+            <div class="col-md-2">
+                ${ticket.cierre?.format("dd-MM-yyyy HH:mm")}
             </div>
         </g:if>
     </div>
+
     <div class="row fila">
         <div class="col-md-1">
             <label>Problema:</label>
@@ -81,6 +112,7 @@
                     <div class="panel-body">
                         <g:form action="saveAccion_ajax" class="frm-accion">
                             <input type="hidden" name="ticket" value="${ticket.id}">
+                            <input type="hidden" id="bandera" name="bandera" value="0">
                             <div class="row fila">
                                 <div class="col-md-1">
                                     <label>Acción tomada:</label>
@@ -95,6 +127,11 @@
                                         <i class="fa fa-save"></i> Guardar
                                     </a>
                                 </div>
+                                <div class="col-md-2 ">
+                                    <a href="#" id="guardarYcerrar" class="btn btn-success">
+                                        <i class="fa fa-save"></i> Guardar y terminar
+                                    </a>
+                                </div>
                             </div>
                         </g:form>
                     </div>
@@ -107,8 +144,23 @@
 <script type="text/javascript">
     $("#guardar").click(function(){
         if($("#resumen").val()!=""){
+            $("#bandera").val(0)
             $(".frm-accion").submit()
         }
+    })
+    $("#guardarYcerrar").click(function(){
+        if($("#resumen").val()!=""){
+            $("#bandera").val(1)
+            $(".frm-accion").submit()
+        }
+    })
+    $("#abrir").click(function(){
+        $("#condicion").val("-1")
+        $(".frm-estado").submit()
+    })
+    $("#cerrar").click(function(){
+        $("#condicion").val("1")
+        $(".frm-estado").submit()
     })
 </script>
 </body>

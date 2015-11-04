@@ -41,6 +41,24 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${categoriaInstance?.tipo}">
+				<li class="fieldcontain">
+					<span id="tipo-label" class="property-label"><g:message code="categoria.tipo.label" default="Tipo" /></span>
+					
+						<span class="property-value" aria-labelledby="tipo-label"><g:fieldValue bean="${categoriaInstance}" field="tipo"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${categoriaInstance?.tiempo}">
+				<li class="fieldcontain">
+					<span id="tiempo-label" class="property-label"><g:message code="categoria.tiempo.label" default="Tiempo" /></span>
+					
+						<span class="property-value" aria-labelledby="tiempo-label"><g:fieldValue bean="${categoriaInstance}" field="tiempo"/></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:categoriaInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

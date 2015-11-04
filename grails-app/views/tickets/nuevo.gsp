@@ -18,22 +18,17 @@
                           optionKey="codigo" optionValue="nombre" class="form-control input-sm select required"
                 />
             </div>
-            <div class="col-md-1">
-                <label>Origen:</label>
-            </div>
-            <div class="col-md-2">
-                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}"
-                          optionKey="id" optionValue="descripcion" class="form-control input-sm "
-                />
-            </div>
+
+
             <div class="col-md-1">
                 <label>Categoría:</label>
             </div>
-            <div class="col-md-3">
-                <g:select name="categoria.id" from="${soporte.Categoria.list([sort: 'descripcion'])}"
-                          optionKey="id" optionValue="descripcion" class="form-control input-sm "
-                />
+            <div class="col-md-2">
+                <input type="checkbox" class="chk" id="tipo" name="tipo_chk" value="1" checked>
+                <input type="hidden" name="tipo" id="tipo-txt" value="1">
             </div>
+            <div class="col-md-3" id="combo"></div>
+
         </div>
         <div class="row fila">
             <div class="col-md-1">
@@ -53,10 +48,19 @@
                 />
             </div>
             <div class="col-md-1">
+                <label>Origen:</label>
+            </div>
+            <div class="col-md-2">
+                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}"
+                          optionKey="id" optionValue="descripcion" class="form-control input-sm "
+                />
+            </div>
+            <div class="col-md-1">
                 <label>Fecha:</label>
             </div>
             <div class="col-md-2">
-                <elm:datepicker name="fecha" showTime="${true}" class="form-control input-sm required" value="${new java.util.Date()}"/>
+                <elm:datepicker name="fecha" showTime="${true}" value="${new java.util.Date()}"
+                                class="form-control input-sm required" />
             </div>
         </div>
         <div class="row fila">
@@ -69,6 +73,20 @@
     </g:form>
 </elm:container>
 <script>
+    function cargaCombos(){
+            var tipo = "S"
+            if( !$(".chk").bootstrapSwitch("state"))
+                tipo="H"
+            $.ajax({
+                type: "POST",
+                url: "${createLink(controller:'tickets', action:'comboCategoria_ajax')}",
+                data: "tipo="+tipo,
+                success: function (msg) {
+                    closeLoader()
+                    $("#combo").html(msg)
+                } //success
+            }); //ajax
+    }
     var validator = $(".frm").validate({
         errorClass     : "help-block",
         errorPlacement : function (error, element) {
@@ -107,11 +125,19 @@
 
     });
     $('.select').combobox();
+    $(".chk").bootstrapSwitch({
+        size:'mini',
+        onText:"Software",
+        offText:"Hardware",
+        offColor:"primary",
+        onSwitchChange:cargaCombos
+    });
     $("#guardar").click(function(){
         if($(".frm").valid()){
             $(".frm").submit()
         }
     })
+    cargaCombos()
 </script>
 </body>
 </html>

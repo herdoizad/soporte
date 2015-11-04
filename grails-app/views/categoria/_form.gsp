@@ -18,3 +18,19 @@
 	<g:textField name="codigo" maxlength="5" required="" class="form-control  required unique noEspacios" value="${categoriaInstance?.codigo}"/>
 </div>
 
+<div class="fieldcontain ${hasErrors(bean: categoriaInstance, field: 'tipo', 'error')} ">
+	<label for="tipo">
+		<g:message code="categoria.tipo.label" default="Tipo" />
+		
+	</label>
+	<g:textField name="tipo" maxlength="1" class="form-control " value="${categoriaInstance?.tipo}"/>
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: categoriaInstance, field: 'tiempo', 'error')} ">
+	<label for="tiempo">
+		<g:message code="categoria.tiempo.label" default="Tiempo" />
+		
+	</label>
+	<g:textField name="tiempo" value="${categoriaInstance.tiempo}" class="digits form-control "/>
+</div>
+

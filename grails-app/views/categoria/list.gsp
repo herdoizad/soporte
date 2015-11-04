@@ -37,6 +37,10 @@
                     
                     <g:sortableColumn property="codigo" title="Codigo" />
                     
+                    <g:sortableColumn property="tipo" title="Tipo" />
+                    
+                    <g:sortableColumn property="tiempo" title="Tiempo" />
+                    
                 </tr>
             </thead>
             <tbody>
@@ -48,12 +52,16 @@
                             
                             <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${categoriaInstance}" field="codigo"/></elm:textoBusqueda></td>
                             
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${categoriaInstance}" field="tipo"/></elm:textoBusqueda></td>
+                            
+                            <td><g:fieldValue bean="${categoriaInstance}" field="tiempo"/></td>
+                            
                         </tr>
                     </g:each>
                 </g:if>
                 <g:else>
                     <tr class="danger">
-                        <td class="text-center" colspan="2">
+                        <td class="text-center" colspan="4">
                             <g:if test="${params.search && params.search!= ''}">
                                 No se encontraron resultados para su búsqueda
                             </g:if>

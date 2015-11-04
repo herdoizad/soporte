@@ -19,6 +19,14 @@
             <g:textField name="codigo" maxlength="5" required="" class="form-control  required unique noEspacios" value="${categoriaInstance?.codigo}"/>
         </elm:fieldRapido>
         
+        <elm:fieldRapido claseLabel="col-sm-2" label="Tipo" claseField="col-sm-6">
+            <g:textField name="tipo" maxlength="1" class="form-control " value="${categoriaInstance?.tipo}"/>
+        </elm:fieldRapido>
+        
+        <elm:fieldRapido claseLabel="col-sm-2" label="Tiempo" claseField="col-sm-2">
+            <g:textField name="tiempo" value="${categoriaInstance.tiempo}" class="digits form-control "/>
+        </elm:fieldRapido>
+        
     </g:form>
         </div>
 

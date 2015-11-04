@@ -5,7 +5,7 @@ class Categoria {
     String descripcion
     String codigo
     String tipo
-
+    Integer tiempo=0
     static auditable = [ignore: []]
 
     /**
@@ -21,6 +21,7 @@ class Categoria {
             descripcion column: 'descripcion'
             codigo column: 'codigo'
             tipo column: 'tipo'
+            tiempo column: 'tiempo'
         }
     }
 
@@ -29,6 +30,7 @@ class Categoria {
         descripcion(size: 1..100)
         codigo(size: 1..5)
         tipo(size: 1..1,nullable: true,blank: true)
+        tiempo(nullable: true,blank:true)
     }
     String toString(){
         return this.descripcion

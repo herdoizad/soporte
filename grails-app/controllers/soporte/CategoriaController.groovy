@@ -15,7 +15,7 @@ class CategoriaController extends Shield {
      * Acción que redirecciona a la lista (acción "list")
      */
     def index() {
-        redirect(action: "list", params: params)
+        redirect(action:"list", params: params)
     }
 
     /**
@@ -28,19 +28,20 @@ class CategoriaController extends Shield {
         params = params.clone()
         params.max = params.max ? Math.min(params.max.toInteger(), 100) : 10
         params.offset = params.offset ?: 0
-        if (all) {
+        if(all) {
             params.remove("max")
             params.remove("offset")
         }
         def list
-        if (params.search) {
+        if(params.search) {
             def c = Categoria.createCriteria()
             list = c.list(params) {
                 or {
                     /* TODO: cambiar aqui segun sea necesario */
-
-                    ilike("codigo", "%" + params.search + "%")
-                    ilike("descripcion", "%" + params.search + "%")
+                    
+                    ilike("codigo", "%" + params.search + "%")  
+                    ilike("descripcion", "%" + params.search + "%")  
+                    ilike("tipo", "%" + params.search + "%")  
                 }
             }
         } else {
@@ -66,9 +67,9 @@ class CategoriaController extends Shield {
      * Acción llamada con ajax que muestra la información de un elemento particular
      */
     def show_ajax() {
-        if (params.id) {
+        if(params.id) {
             def categoriaInstance = Categoria.get(params.id)
-            if (!categoriaInstance) {
+            if(!categoriaInstance) {
                 render "ERROR*No se encontró Categoria."
                 return
             }
@@ -83,9 +84,9 @@ class CategoriaController extends Shield {
      */
     def form_ajax() {
         def categoriaInstance = new Categoria()
-        if (params.id) {
+        if(params.id) {
             categoriaInstance = Categoria.get(params.id)
-            if (!categoriaInstance) {
+            if(!categoriaInstance) {
                 render "ERROR*No se encontró Categoria."
                 return
             }
@@ -99,15 +100,15 @@ class CategoriaController extends Shield {
      */
     def save_ajax() {
         def categoriaInstance = new Categoria()
-        if (params.id) {
+        if(params.id) {
             categoriaInstance = Categoria.get(params.id)
-            if (!categoriaInstance) {
+            if(!categoriaInstance) {
                 render "ERROR*No se encontró Categoria."
                 return
             }
         }
         categoriaInstance.properties = params
-        if (!categoriaInstance.save(flush: true)) {
+        if(!categoriaInstance.save(flush: true)) {
             render "ERROR*Ha ocurrido un error al guardar Categoria: " + renderErrors(bean: categoriaInstance)
             return
         }
@@ -119,7 +120,7 @@ class CategoriaController extends Shield {
      * Acción llamada con ajax que permite eliminar un elemento
      */
     def delete_ajax() {
-        if (params.id) {
+        if(params.id) {
             def categoriaInstance = Categoria.get(params.id)
             if (!categoriaInstance) {
                 render "ERROR*No se encontró Categoria."
@@ -138,7 +139,7 @@ class CategoriaController extends Shield {
             return
         }
     } //delete para eliminar via ajax
-
+    
     /**
      * Acción llamada con ajax que valida que no se duplique la propiedad codigo
      * @render boolean que indica si se puede o no utilizar el valor recibido
@@ -159,5 +160,5 @@ class CategoriaController extends Shield {
             return
         }
     }
-
+        
 }

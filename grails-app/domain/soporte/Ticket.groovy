@@ -1,5 +1,6 @@
 package soporte
 
+import groovy.time.TimeCategory
 import soporte.seguridad.Persona
 
 class Ticket {
@@ -53,4 +54,25 @@ class Ticket {
         fuente(size: 1..1,nullable: true,blank: true)
         ip(nullable: true,blank: true,size: 1..20)
     }
+
+
+    def getColorSemaforo(){
+        def colores = ['card-bg-green','svt-bg-warning','svt-bg-danger']
+        def now = new Date()
+        def fechaLimite=this.fecha
+        use( TimeCategory ) {
+            fechaLimite = fechaLimite + this.categoria.tiempo.hours
+        }
+        if(fechaLimite<now)
+            return colores[2]
+       def dif
+        use(groovy.time.TimeCategory) {
+             dif = now - fechaLimite
+             println "dif "+dif.minutes+"  "
+            if(dif.minutes<10)
+                return colores[1]
+        }
+        return colores[0]
+    }
+
 }

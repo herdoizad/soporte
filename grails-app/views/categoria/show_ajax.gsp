@@ -33,5 +33,31 @@
             </div>
         </g:if>
     
+        <g:if test="${categoriaInstance?.tipo}">
+            <div class="row">
+                <div class="col-sm-3 show-label">
+                    Tipo
+                </div>
+                
+                <div class="col-sm-4">
+                    <g:fieldValue bean="${categoriaInstance}" field="tipo"/>
+                </div>
+                
+            </div>
+        </g:if>
+    
+        <g:if test="${categoriaInstance?.tiempo}">
+            <div class="row">
+                <div class="col-sm-3 show-label">
+                    Tiempo
+                </div>
+                
+                <div class="col-sm-4">
+                    <g:fieldValue bean="${categoriaInstance}" field="tiempo"/>
+                </div>
+                
+            </div>
+        </g:if>
+    
     </div>
 </g:else>
