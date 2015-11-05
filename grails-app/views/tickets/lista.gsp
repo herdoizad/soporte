@@ -28,6 +28,7 @@
                     <th>Cliente</th>
                     <th>Categoria</th>
                     <th>Problema</th>
+                    <th>Fecha</th>
                     <th>Estado</th>
                     <th></th>
                     <th></th>
@@ -40,6 +41,7 @@
                         <td>${a.cliente.nombre}</td>
                         <td>${a.categoria.descripcion}</td>
                         <td>${a.descripcion}</td>
+                        <td style="text-align: center">${a.fecha.format("dd-MM-yyyy HH:mm")}</td>
                         <td style="text-align: center">${a.estado.descripcion}</td>
                         <td style="width: 40px">
                             <div class="circle-card ${a.getColorSemaforo()}"></div>
