@@ -78,164 +78,220 @@
 <body>
 
 <div class="row">
-    <div class="col-md-4">
-        <div class="cuadro rojo">
-            <div class="row">
-                <div class="col-md-12 titulo">
-                    Tickets
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${abiertos.size()}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Abiertos
-                </div>
+<div class="col-md-4">
+    <div class="cuadro rojo">
+        <div class="row">
+            <div class="col-md-12 titulo">
+                Tickets
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <table class="table table-condensed">
-                    <tbody>
-                    <g:each in="${abiertos}" var="a">
-                        <tr>
-                            <td style="text-align: center">${a.id}</td>
-                            <td>
-                                <label>${a.cliente.nombre}</label>
-                                <br/>
-                                ${a.categoria.descripcion}
-                            </td>
-                            <td>
-                                ${a.fecha.format("dd-MM-yyyy HH:mm")}
-                            </td>
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
+            <div class="col-md-5 numero-cuadro" >
+                ${abiertos.size()}
+            </div>
+            <div class="col-md-7 texto-cuadro">
+                Abiertos
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12" style="height: 720px;overflow: auto">
+            <table class="table table-condensed">
+                <tbody>
+                <g:each in="${abiertos}" var="a">
+                    <tr>
+                        <td style="text-align: center">${a.id}</td>
+                        <td>
+                            <label>${a.cliente.nombre}</label>
+                            <br/>
+                            ${a.categoria.descripcion}
+                        </td>
+                        <td>
+                            ${a.fecha.format("dd-MM-yyyy HH:mm")}
+                        </td>
+                    </tr>
+                </g:each>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="cuadro rojo">
+        <div class="row">
+            <div class="col-md-5 numero-cuadro" >
+                ${cerrados.size()}
+            </div>
+            <div class="col-md-7 texto-cuadro">
+                Cerrados
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="row" style="margin-top: 0px">
+        <div class="col-md-6">
+            <div class="cuadro  verde-azul">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Resumen
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;text-align: center">
+                    <div class="col-md-7 " >
+                        <div class="c100 p${pDia} ${pDia<75?'rojo':''}">
+                            <span>${pDia}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
+                        Hoy
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;text-align: center">
+                    <div class="col-md-7 " >
+                        <div class="c100 p${pSemana} ${pSemana<75?'rojo':''}">
+                            <span>${pSemana}%</span>
+                            <div class="slice">
+                                <div class="bar"></div>
+                                <div class="fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
+                        Semana
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;text-align: center">
+                    <div class="col-md-7 " >
+                        <div class="c100 p${pTotal} ${pTotal<75?'rojo':''}">
+                            <span>${pTotal}%</span>
+                            <div class="slice">
+                                <div class="bar "></div>
+                                <div class="fill "></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
+                        Total
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="col-md-4">
-        <div class="cuadro  verde-azul">
-            <div class="row">
-                <div class="col-md-12 titulo">
-                    Resumen
-                </div>
-            </div>
-            <div class="row" style="margin-top: 10px;text-align: center">
-                <div class="col-md-7 " >
-                    <div class="c100 p${pDia} ${pDia<75?'rojo':''}">
-                        <span>${pDia}%</span>
-                        <div class="slice">
-                            <div class="bar"></div>
-                            <div class="fill"></div>
-                        </div>
+        <div class="col-md-6">
+            <div class="cuadro  azul">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Clientes
                     </div>
                 </div>
-                <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                    Hoy
-                </div>
-            </div>
-            <div class="row" style="margin-top: 10px;text-align: center">
-                <div class="col-md-7 " >
-                    <div class="c100 p${pSemana} ${pSemana<75?'rojo':''}">
-                        <span>${pSemana}%</span>
-                        <div class="slice">
-                            <div class="bar"></div>
-                            <div class="fill"></div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-5 numero-cuadro" >
+                        ${soporte.Cliente.countByEstado("1")}
+                    </div>
+                    <div class="col-md-7 texto-cuadro">
+                        Activos
                     </div>
                 </div>
-                <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                    Semana
-                </div>
-            </div>
-            <div class="row" style="margin-top: 10px;text-align: center">
-                <div class="col-md-7 " >
-                    <div class="c100 p${pTotal} ${pTotal<75?'rojo':''}">
-                        <span>${pTotal}%</span>
-                        <div class="slice">
-                            <div class="bar "></div>
-                            <div class="fill "></div>
-                        </div>
+                <div class="row">
+                    <div class="col-md-5 numero-cuadro" >
+                        ${soporte.Cliente.countByEstado("0")}
+                    </div>
+                    <div class="col-md-7 texto-cuadro">
+                        Inactivos
                     </div>
                 </div>
-                <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                    Total
+            </div>
+            <div class="cuadro  verde" style="margin-top: 15px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Ticket mas antiguo sin resolver
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px">
+                    <div class="col-md-12 texto-cuadro-cuadro" >
+                        #${masAntiguo?.id} - ${masAntiguo?.cliente.nombre} -
+                        ${masAntiguo.categoria.descripcion} <br/>
+                        ${masAntiguo.fecha.format("dd-MM-yyyy HH:mm")}
+                    </div>
+                </div>
+                <g:if test="${duracionMasAntiguo}">
+                    <div class="row">
+                        <div class="col-md-5 numero-cuadro" >
+                            ${duracionMasAntiguo.days*24*60+duracionMasAntiguo.hours*60+duracionMasAntiguo.minutes}
+                        </div>
+                        <div class="col-md-7 texto-cuadro">
+                            Minutos
+                        </div>
+                    </div>
+                </g:if>
+            </div>
+            <div class="cuadro  naranja" style="margin-top: 15px;height: 140px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Tiempo promedio de respuesta
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 numero-cuadro" >
+                        ${(int)(promedio/60)}
+                    </div>
+                    <div class="col-md-7 texto-cuadro">
+                        Minutos
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px">
+        <div class="col-md-6">
+            <div class="cuadro plomo " style="margin-top: 15px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Tickets por tipo
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-12">
+                        <canvas id="chartHS" style="width: 100%;height: 300px"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1" style="background:#F7464A ">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-10"> Hardware ${(datosHS[0]*100/datosHS.sum()).toDouble().round(2)}%</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1" style="background:#46BFBD ">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-10"> Software ${(datosHS[1]*100/datosHS.sum()).toDouble().round(2)}%</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="cuadro plomo " style="margin-top: 15px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Estaciones con más tickets
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <canvas id="chartRadar" style="width: 100%;height: 345px"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="col-md-4">
-        <div class="cuadro  azul">
-            <div class="row">
-                <div class="col-md-12 titulo">
-                    Clientes
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${soporte.Cliente.countByEstado("1")}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Activos
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${soporte.Cliente.countByEstado("0")}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Inactivos
-                </div>
-            </div>
-        </div>
-        <div class="cuadro  verde" style="margin-top: 15px">
-            <div class="row">
-                <div class="col-md-12 titulo">
-                    Tickets
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${abiertos.size()}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Abiertos
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${cerrados.size()}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Cerrados
-                </div>
-            </div>
-        </div>
-        <div class="cuadro  naranja" style="margin-top: 15px">
-            <div class="row">
-                <div class="col-md-12 titulo">
-                    Tiempo promedio de respuesta
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5 numero-cuadro" >
-                    ${(int)(promedio/60)}
-                </div>
-                <div class="col-md-7 texto-cuadro">
-                    Minutos
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+</div>
 
 </div>
+
 <div class="row" style="margin-top: 20px">
     <div class="col-md-12">
         <div class="cuadro plomo " style="margin-top: 15px">
@@ -247,6 +303,23 @@
             <div class="row">
                 <div class="col-md-12">
                     <canvas id="myChart" style="width: 100%;height: 300px"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <div class="cuadro plomo " style="margin-top: 15px">
+            <div class="row">
+                <div class="col-md-12 titulo">
+                    Tickets por mes
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <canvas id="chartMes" style="width: 100%;height: 300px"></canvas>
                 </div>
             </div>
         </div>
@@ -269,6 +342,56 @@
         ]
     };
     var myNewChart = new Chart(ctx).Bar(data);
+    ctx = $("#chartHS").get(0).getContext("2d");
+    data = [
+        {
+            value: ${datosHS[0]},
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Hardware"
+        },
+        {
+            value: ${datosHS[1]},
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Software"
+        }
+    ]
+    myNewChart = new Chart(ctx).Pie(data);
+    ctx = $("#chartRadar").get(0).getContext("2d");
+    var data = {
+        labels: ${raw(clientes)},
+        datasets: [
+            {
+                label: "Tickets por cliente",
+                fillColor: "rgba(35, 198, 200,0.2)",
+                strokeColor: "black",
+                pointColor: "black",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [${datosClientes.join(",")}]
+            }
+        ]
+    };
+    myNewChart = new Chart(ctx).Radar(data);
+    ctx = $("#chartMes").get(0).getContext("2d");
+    var data = {
+        labels: ${raw(meses)},
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "#1C84C6",
+                pointColor: "#1C84C6",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [${datosMeses.join(",")}]
+            }
+        ]
+    };
+    myNewChart = new Chart(ctx).Line(data);
 </script>
 </body>
 </html>
