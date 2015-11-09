@@ -10,5 +10,6 @@ class TicketsService {
     }
     def cerrarTicket(Ticket ticket){
         ticket.cierre= new Date()
+
     }
 }

@@ -9,12 +9,13 @@
 <body>
 <elm:container tipo="horizontal" titulo="Nuevo ticket">
     <g:form class="frm" action="save_ajax">
+        <input type="hidden" name="id" value="${ticket?.id}">
         <div class="row fila">
             <div class="col-md-1">
                 <label>Cliente:</label>
             </div>
             <div class="col-md-3">
-                <g:select name="cliente_codigo" from="${soporte.Cliente.list([sort: 'nombre'])}" noSelection="['':'']"
+                <g:select name="cliente_codigo" from="${soporte.Cliente.list([sort: 'nombre'])}" noSelection="['':'']" value="${ticket?.cliente?.codigo}"
                           optionKey="codigo" optionValue="nombre" class="form-control input-sm select required"
                 />
             </div>
@@ -35,7 +36,7 @@
                 <label>Problema:</label>
             </div>
             <div class="col-md-10">
-                <textarea class="form-control input-sm required" name="descripcion" style="height: 200px;resize: vertical;"></textarea>
+                <textarea class="form-control input-sm required" name="descripcion" style="height: 200px;resize: vertical;">${ticket?.descripcion}</textarea>
             </div>
         </div>
         <div class="row fila">
@@ -43,7 +44,7 @@
                 <label>Prioridad:</label>
             </div>
             <div class="col-md-2">
-                <g:select name="prioridad.id" from="${soporte.Prioridad.list([sort: 'descripcion'])}"
+                <g:select name="prioridad.id" from="${soporte.Prioridad.list([sort: 'descripcion'])}" value="${ticket?.prioridad?.id}"
                           optionKey="id" optionValue="descripcion" class="form-control input-sm required "
                 />
             </div>
@@ -51,7 +52,7 @@
                 <label>Origen:</label>
             </div>
             <div class="col-md-2">
-                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}"
+                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}" value="${ticket?.origen.id}"
                           optionKey="id" optionValue="descripcion" class="form-control input-sm "
                 />
             </div>
@@ -59,7 +60,7 @@
                 <label>Fecha:</label>
             </div>
             <div class="col-md-2">
-                <elm:datepicker name="fecha" showTime="${true}" value="${new java.util.Date()}"
+                <elm:datepicker name="fecha" showTime="${true}" value="${ticket?ticket.fecha:new java.util.Date()}"
                                 class="form-control input-sm required" />
             </div>
         </div>

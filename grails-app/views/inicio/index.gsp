@@ -76,7 +76,7 @@
     <script src="${g.resource(dir: 'js/plugins/Chart.js-master',file: 'Chart.js')}"></script>
 </head>
 <body>
-
+<div id="contenedor">
 <div class="row">
 <div class="col-md-4">
     <div class="cuadro rojo">
@@ -212,9 +212,9 @@
                 </div>
                 <div class="row" style="margin-top: 15px">
                     <div class="col-md-12 texto-cuadro-cuadro" >
-                        #${masAntiguo?.id} - ${masAntiguo?.cliente.nombre} -
-                        ${masAntiguo.categoria.descripcion} <br/>
-                        ${masAntiguo.fecha.format("dd-MM-yyyy HH:mm")}
+                        #${masAntiguo?.id} - ${masAntiguo?.cliente?.nombre} -
+                        ${masAntiguo?.categoria?.descripcion} <br/>
+                        ${masAntiguo?.fecha?.format("dd-MM-yyyy HH:mm")}
                     </div>
                 </div>
                 <g:if test="${duracionMasAntiguo}">
@@ -326,6 +326,14 @@
 
     </div>
 </div>
+</div>
+<div class="row">
+    <div class="col-md-1">
+        <a href="#" id="pantalla" class="btn btn-info btn-sm">
+            <i class="fa fa-desktop"></i>
+        </a>
+    </div>
+</div>
 <script type="text/javascript">
     var ctx = $("#myChart").get(0).getContext("2d");
     var data = {
@@ -392,6 +400,10 @@
         ]
     };
     myNewChart = new Chart(ctx).Line(data);
+    $("#pantalla").click(function(){
+        document.getElementById("contenedor").webkitRequestFullscreen();
+        $("#contenedor").css({"overflow":"auto",width:"100%"})
+    })
 </script>
 </body>
 </html>

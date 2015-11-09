@@ -5,6 +5,7 @@ import soporte.seguridad.Shield
 
 class TicketsController  extends Shield{
     def ticketsService
+    def mailService
     def index() {
         redirect(action: 'lista')
     }
@@ -15,8 +16,11 @@ class TicketsController  extends Shield{
             max = max + 1.hours
             min = max-1.weeks
         }
+        def ticket = null
+        if(params.id)
+            ticket=Ticket.get(params.id)
         println "max "+max
-        [max:max,min:min]
+        [max:max,min:min,ticket: ticket]
     }
 
     def save_ajax(){
@@ -61,7 +65,19 @@ class TicketsController  extends Shield{
         if(params.bandera && params.bandera=="1") {
             accion.ticket.estado = Estado.findByCodigo("P02")
             ticketsService.cerrarTicket(accion.ticket)
+//            def email = "valentinsvt@hotmail.com"
+            def email = accion.ticket.cliente.email
+            mailService.sendMail {
+                multipart true
+                to email
+                subject "Control system -  ticket cerrado"
+                body( view:"mailTicketCerrado",
+                        model:[ticket:accion.ticket])
+                inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
+//            inline 'logo','image/png', new File('./web-app///images/logo-login.png').readBytes()
+            }
             accion.ticket.save(flush: true)
+
 
         }
         redirect(action: "verTicket",id: accion.ticket.id)
@@ -80,7 +96,18 @@ class TicketsController  extends Shield{
         }
         if(params.estado=="1"){
             ticket.estado=Estado.findByCodigo("P02")
+//            def email = "valentinsvt@hotmail.com"
+            def email = ticket.cliente.email
             ticketsService.cerrarTicket(ticket)
+            mailService.sendMail {
+                multipart true
+                to email
+                subject "Control system -  ticket cerrado"
+                body( view:"mailTicketCerrado",
+                        model:[ticket:ticket])
+                inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
+//            inline 'logo','image/png', new File('./web-app///images/logo-login.png').readBytes()
+            }
         }
         ticket.save(flush: true)
         redirect(action: "verTicket",id: params.id)

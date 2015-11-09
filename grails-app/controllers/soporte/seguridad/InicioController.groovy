@@ -11,7 +11,7 @@ class InicioController extends Shield {
     static final sistema="T"
     def dataSource
     def index() {
-        def abiertos = Ticket.findAllByEstado(Estado.findByCodigo("P01"))
+        def abiertos = Ticket.findAllByEstado(Estado.findByCodigo("P01"),[sort:"fecha",order:"asc"])
         def hoyAbiertos = Ticket.findAllByEstadoAndFechaBetween(Estado.findByCodigo("P01"),new Date().clearTime(),new Date().clearTime().plus(1))
         def hoyCerrados = Ticket.findAllByEstadoAndFechaBetween(Estado.findByCodigo("P02"),new Date().clearTime(),new Date().clearTime().plus(1))
         def now = new Date().clearTime()
@@ -66,6 +66,14 @@ class InicioController extends Shield {
             else
                 datosHS[1]++
             if(ticket.estado.codigo=="P02"){
+
+                use(groovy.time.TimeCategory) {
+                    def duration = ticket.cierre-ticket.fecha
+                    tiempos.add(duration.seconds+duration.minutes*60+duration.hours*60*60+duration.days*24*60*60)
+                }
+
+
+            }else{
                 if(!masAntiguo){
                     masAntiguo=ticket
                     use(groovy.time.TimeCategory) {
@@ -79,12 +87,6 @@ class InicioController extends Shield {
                         }
                     }
                 }
-                use(groovy.time.TimeCategory) {
-                    def duration = ticket.cierre-ticket.fecha
-                    tiempos.add(duration.seconds+duration.minutes*60+duration.hours*60*60+duration.days*24*60*60)
-                }
-
-
             }
         }
         categorias+="]"
