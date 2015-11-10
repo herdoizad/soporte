@@ -15,8 +15,25 @@ class VisitaController extends Shield {
      * Acción que redirecciona a la lista (acción "list")
      */
     def index() {
-        redirect(action: "list", params: params)
+        redirect(action: "nueva", params: params)
     }
+
+
+    def nuevaVisita(){
+        def hardware = ItemVisita.findAllByTipo("H",[sort:"codigo"])
+        def software = ItemVisita.findAllByTipo("S",[sort:"codigo"])
+        [hardware:hardware,software:software]
+    }
+
+    def verVisita(){
+        def visita = Visita.get(params.id)
+        def hw = ItemVisita.findAllByTipo("H",[sort:"codigo"])
+        def sw = ItemVisita.findAllByTipo("S",[sort:"codigo"])
+        def hardware = DetalleVisita.findAllByVisitaAndItemVisitaInList(visita,hw)
+        def software = DetalleVisita.findAllByVisitaAndItemVisitaInList(visita,sw)
+        [visita:visita,hardware:hardware,software:software]
+    }
+
 
     /**
      * Función que saca la lista de elementos según los parámetros recibidos
@@ -106,12 +123,35 @@ class VisitaController extends Shield {
             }
         }
         visitaInstance.properties = params
+        visitaInstance.cliente=Cliente.findByCodigo(params.codigo_cliente)
+        visitaInstance.usuario=session.usuario
         if (!visitaInstance.save(flush: true)) {
             render "ERROR*Ha ocurrido un error al guardar Visita: " + renderErrors(bean: visitaInstance)
             return
+        }else{
+            def data = params.data
+            if(data.size()>0){
+                data = data.split("\\|")
+                println "data "+data
+                data.each {
+                    if(it.size()>2){
+                        def parts = it.split(";")
+                        println "parts "+parts
+                        def detalle = new DetalleVisita()
+                        detalle.visita=visitaInstance
+                        detalle.itemVisita=ItemVisita.get(parts[0])
+                        detalle.estado="R"
+                        if(parts.size()>2)
+                            detalle.observaciones=parts[2]
+
+                        detalle.save(flush: true)
+                    }
+
+                }
+            }
         }
-        render "SUCCESS*${params.id ? 'Actualización' : 'Creación'} de Visita exitosa."
-        return
+        flash.message="Visita registrada"
+        redirect(action: "nuevaVisita")
     } //save para grabar desde ajax
 
     /**

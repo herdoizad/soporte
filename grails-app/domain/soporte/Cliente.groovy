@@ -59,7 +59,7 @@ class Cliente {
         if(visita.size()==0)
             return 0
         else{
-            if(new Date()-visita.first()>180){
+            if(new Date()-visita.first().fecha>360){
                 return 0
             }else{
                 return 1

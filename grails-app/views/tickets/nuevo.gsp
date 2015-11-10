@@ -52,7 +52,7 @@
                 <label>Origen:</label>
             </div>
             <div class="col-md-2">
-                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}" value="${ticket?.origen.id}"
+                <g:select name="origen.id" from="${soporte.Origen.list([sort: 'descripcion'])}" value="${ticket?.origen?.id}"
                           optionKey="id" optionValue="descripcion" class="form-control input-sm "
                 />
             </div>
