@@ -67,15 +67,23 @@ class TicketsController  extends Shield{
             ticketsService.cerrarTicket(accion.ticket)
 //            def email = "valentinsvt@hotmail.com"
             def email = accion.ticket.cliente.email
-            mailService.sendMail {
-                multipart true
-                to email
-                subject "Control system -  ticket cerrado"
-                body( view:"mailTicketCerrado",
-                        model:[ticket:accion.ticket])
-                inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
+            try{
+                if(email && email!=""){
+                    mailService.sendMail {
+                        multipart true
+                        to email
+                        subject "Control system -  ticket cerrado"
+                        body( view:"mailTicketCerrado",
+                                model:[ticket:accion.ticket])
+                        inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
 //            inline 'logo','image/png', new File('./web-app///images/logo-login.png').readBytes()
+                    }
+                }
+            }catch (e){
+                println "error al mandar el email "+e
             }
+
+
             accion.ticket.save(flush: true)
 
 
@@ -99,14 +107,19 @@ class TicketsController  extends Shield{
 //            def email = "valentinsvt@hotmail.com"
             def email = ticket.cliente.email
             ticketsService.cerrarTicket(ticket)
-            mailService.sendMail {
-                multipart true
-                to email
-                subject "Control system -  ticket cerrado"
-                body( view:"mailTicketCerrado",
-                        model:[ticket:ticket])
-                inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
-//            inline 'logo','image/png', new File('./web-app///images/logo-login.png').readBytes()
+            try{
+                if(email && email!=""){
+                    mailService.sendMail {
+                        multipart true
+                        to email
+                        subject "Control system -  ticket cerrado"
+                        body( view:"mailTicketCerrado",
+                                model:[ticket:ticket])
+                        inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
+                    }
+                }
+            }catch (e){
+                println "error al mandar el email "+e
             }
         }
         ticket.save(flush: true)
