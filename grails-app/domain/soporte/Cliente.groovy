@@ -40,7 +40,7 @@ class Cliente {
 
     static constraints = {
         nombre(size: 1..40)
-        email (size: 1..40,nullable: true)
+        email (size: 1..100,nullable: true)
         latitud(nullable: true)
         longitud(nullable: true)
         direccion(nullable: true,size: 1..250,blank: true)

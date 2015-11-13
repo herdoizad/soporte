@@ -19,8 +19,6 @@
                           optionKey="codigo" optionValue="nombre" class="form-control input-sm select required"
                 />
             </div>
-
-
             <div class="col-md-1">
                 <label>Categoría:</label>
             </div>
@@ -29,7 +27,6 @@
                 <input type="hidden" name="tipo" id="tipo-txt" value="1">
             </div>
             <div class="col-md-3" id="combo"></div>
-
         </div>
         <div class="row fila">
             <div class="col-md-1">

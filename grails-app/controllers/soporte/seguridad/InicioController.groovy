@@ -16,7 +16,6 @@ class InicioController extends Shield {
         def hoyCerrados = Ticket.findAllByEstadoAndFechaBetween(Estado.findByCodigo("P02"),new Date().clearTime(),new Date().clearTime().plus(1))
         def now = new Date().clearTime()
         def firstDay = now - (now.calendarDate.dayOfWeek-2)
-        println "first "+firstDay
         def semanaAbiertos = Ticket.findAllByEstadoAndFechaBetween(Estado.findByCodigo("P01"),firstDay,firstDay.plus(5))
         def semanaCerrados = Ticket.findAllByEstadoAndFechaBetween(Estado.findByCodigo("P02"),firstDay,firstDay.plus(5))
         def porcentajeDia = 0
@@ -112,8 +111,8 @@ class InicioController extends Shield {
         clientes+="]"
 
 
-        [abiertos:abiertos,hoyAbiertos:hoyAbiertos,totalDia:hoyAbiertos.size()+hoyCerrados.size(),masAntiguo:masAntiguo,duracionMasAntiguo:duracionMasAntiguo,
-         cerrados:cerrados,categorias:categorias,datosCategorias:datosCategorias,datosHS:datosHS,clientes:clientes,datosClientes:datosClientes,meses:meses,datosMeses:datosMeses,
+        [abiertos:abiertos,hoyAbiertos:hoyAbiertos,hoyCerrados:hoyCerrados,totalDia:hoyAbiertos.size()+hoyCerrados.size(),masAntiguo:masAntiguo,duracionMasAntiguo:duracionMasAntiguo,
+         cerrados:cerrados,categorias:categorias,datosCategorias:datosCategorias,datosHS:datosHS,clientes:clientes,datosClientes:datosClientes,meses:meses,datosMeses:datosMeses,semanaCerrados:semanaCerrados,
          totalSemana:semanaAbiertos.size()+semanaCerrados.size(), pDia:(int)porcentajeDia,pSemana:(int)porcentajeSemana,pTotal:(int)pTotal,promedio:promedio]
     }
 

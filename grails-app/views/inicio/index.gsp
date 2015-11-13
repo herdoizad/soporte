@@ -136,7 +136,7 @@
                     </div>
                 </div>
                 <div class="row" style="margin-top: 10px;text-align: center">
-                    <div class="col-md-7 " >
+                    <div class="col-md-5 " >
                         <div class="c100 p${pDia} ${pDia<75?'rojo':''}">
                             <span>${pDia}%</span>
                             <div class="slice">
@@ -145,8 +145,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                        Hoy
+                    <div class="col-md-7 texto-cuadro" style="line-height: 50px">
+                        Hoy <br>(${hoyCerrados.size()}/${totalDia})
                     </div>
                 </div>
                 <div class="row" style="margin-top: 10px;text-align: center">
@@ -159,8 +159,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                        Semana
+                    <div class="col-md-5 texto-cuadro" style="line-height: 50px">
+                        Semana (${semanaCerrados.size()}/${totalSemana})
                     </div>
                 </div>
                 <div class="row" style="margin-top: 10px;text-align: center">
@@ -173,8 +173,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 texto-cuadro" style="line-height: 110px">
-                        Total
+                    <div class="col-md-5 texto-cuadro" style="line-height: 50px">
+                        Total (${cerrados.size()}/${abiertos.size()+cerrados.size()})
                     </div>
                 </div>
             </div>
