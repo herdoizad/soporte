@@ -201,6 +201,7 @@ class ClienteController extends Shield {
         def contactos = Contactos.findAllByCliente(cliente,[sort: "nombre"])
         def software = SoftwareCliente.findAllByCliente(cliente)
         def hardware = HardwareCliente.findAllByCliente(cliente)
+        hardware=hardware.sort{it.hardware?.tipo?.codigo}
         def contrato =  Contrato.findAllByCliente(cliente,[sort: "fin",order:"desc"])
         if(contrato.size()>0)
             contrato=contrato.first()

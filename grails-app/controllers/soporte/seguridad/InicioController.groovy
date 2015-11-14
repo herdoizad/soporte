@@ -37,7 +37,12 @@ class InicioController extends Shield {
         def datosCategorias = []
         def indice = [:]
         lista.eachWithIndex {it,i->
-            categorias+="'${it.descripcion}'"
+            if(it.descripcion.size()>20){
+                categorias+="'${it.descripcion.substring(0,20)}'"
+            }else{
+                categorias+="'${it.descripcion}'"
+            }
+
             indice.put(it.descripcion,i)
             datosCategorias.add(0)
             if(i<lista.size()-1){
@@ -47,6 +52,7 @@ class InicioController extends Shield {
         def tiempos = []
         def masAntiguo = null
         def duracionMasAntiguo = null
+        def ticketMasLargo = [:]
         def datosHS=[0,0]
         /*tickets por meses*/
         def meses ="['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']"
@@ -65,10 +71,20 @@ class InicioController extends Shield {
             else
                 datosHS[1]++
             if(ticket.estado.codigo=="P02"){
-
                 use(groovy.time.TimeCategory) {
                     def duration = ticket.cierre-ticket.fecha
-                    tiempos.add(duration.seconds+duration.minutes*60+duration.hours*60*60+duration.days*24*60*60)
+                    def tiempo = duration.minutes+duration.hours*60+duration.days*24*60
+//                    println "ticket "+ticket.id+"  "+duration+"  "+ticket.fecha.format("dd-MM-yyyy HH:mm:ss")+"  "+ticket.cierre.format("dd-MM-yyyy HH:mm:ss")
+                    tiempos.add(tiempo)
+                    if(ticketMasLargo.size()==0){
+                        ticketMasLargo.put("duracion",tiempo)
+                        ticketMasLargo.put("ticket",ticket)
+                    }else{
+                        if(ticketMasLargo["duracion"]<tiempo){
+                            ticketMasLargo["duracion"]=tiempo
+                            ticketMasLargo["ticket"]=ticket
+                        }
+                    }
                 }
 
 
@@ -111,7 +127,7 @@ class InicioController extends Shield {
         clientes+="]"
 
 
-        [abiertos:abiertos,hoyAbiertos:hoyAbiertos,hoyCerrados:hoyCerrados,totalDia:hoyAbiertos.size()+hoyCerrados.size(),masAntiguo:masAntiguo,duracionMasAntiguo:duracionMasAntiguo,
+        [abiertos:abiertos,hoyAbiertos:hoyAbiertos,hoyCerrados:hoyCerrados,totalDia:hoyAbiertos.size()+hoyCerrados.size(),masAntiguo:masAntiguo,duracionMasAntiguo:duracionMasAntiguo,ticketMasLargo:ticketMasLargo,
          cerrados:cerrados,categorias:categorias,datosCategorias:datosCategorias,datosHS:datosHS,clientes:clientes,datosClientes:datosClientes,meses:meses,datosMeses:datosMeses,semanaCerrados:semanaCerrados,
          totalSemana:semanaAbiertos.size()+semanaCerrados.size(), pDia:(int)porcentajeDia,pSemana:(int)porcentajeSemana,pTotal:(int)pTotal,promedio:promedio]
     }

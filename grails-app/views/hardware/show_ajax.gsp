@@ -46,5 +46,18 @@
             </div>
         </g:if>
     
+        <g:if test="${hardwareInstance?.tipo}">
+            <div class="row">
+                <div class="col-sm-3 show-label">
+                    Tipo
+                </div>
+                
+                <div class="col-sm-4">
+                    ${hardwareInstance?.tipo?.encodeAsHTML()}
+                </div>
+                
+            </div>
+        </g:if>
+    
     </div>
 </g:else>

@@ -9,6 +9,7 @@ class HardwareCliente {
     String estado="A"  /*A-> activo */
     Date instalacion
     String versionHardware
+
     static auditable = [ignore: []]
 
     /**

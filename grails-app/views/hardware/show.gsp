@@ -50,6 +50,15 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${hardwareInstance?.tipo}">
+				<li class="fieldcontain">
+					<span id="tipo-label" class="property-label"><g:message code="hardware.tipo.label" default="Tipo" /></span>
+					
+						<span class="property-value" aria-labelledby="tipo-label"><g:link controller="tipoHardware" action="show" id="${hardwareInstance?.tipo?.id}">${hardwareInstance?.tipo?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form url="[resource:hardwareInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

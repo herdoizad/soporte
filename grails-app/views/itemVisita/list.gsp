@@ -1,10 +1,10 @@
 
-<%@ page import="soporte.Hardware" %>
+<%@ page import="soporte.ItemVisita" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta name="layout" content="main">
-        <title>Lista de Hardware</title>
+        <title>Lista de ItemVisita</title>
     </head>
     <body>
 
@@ -21,7 +21,7 @@
                 <div class="input-group">
                     <input type="text" class="form-control input-search" placeholder="Buscar" value="${params.search}">
                     <span class="input-group-btn">
-                        <g:link controller="hardware" action="list" class="btn btn-default btn-search">
+                        <g:link controller="itemvisita" action="list" class="btn btn-default btn-search">
                             <i class="fa fa-search"></i>&nbsp;
                         </g:link>
                     </span>
@@ -33,35 +33,31 @@
             <thead>
                 <tr>
                     
-                    <g:sortableColumn property="nombre" title="Nombre" />
+                    <g:sortableColumn property="descripcion" title="Descripcion" />
                     
-                    <g:sortableColumn property="modelo" title="Modelo" />
+                    <g:sortableColumn property="codigo" title="Codigo" />
                     
-                    <g:sortableColumn property="marca" title="Marca" />
-                    
-                    <th>Tipo</th>
+                    <g:sortableColumn property="tipo" title="Tipo" />
                     
                 </tr>
             </thead>
             <tbody>
-                <g:if test="${hardwareInstanceCount > 0}">
-                    <g:each in="${hardwareInstanceList}" status="i" var="hardwareInstance">
-                        <tr data-id="${hardwareInstance.id}">
+                <g:if test="${itemVisitaInstanceCount > 0}">
+                    <g:each in="${itemVisitaInstanceList}" status="i" var="itemVisitaInstance">
+                        <tr data-id="${itemVisitaInstance.id}">
                             
-                            <td>${hardwareInstance.nombre}</td>
+                            <td>${itemVisitaInstance.descripcion}</td>
                             
-                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${hardwareInstance}" field="modelo"/></elm:textoBusqueda></td>
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${itemVisitaInstance}" field="codigo"/></elm:textoBusqueda></td>
                             
-                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${hardwareInstance}" field="marca"/></elm:textoBusqueda></td>
-                            
-                            <td><elm:textoBusqueda busca="${params.search}">${hardwareInstance.tipo?.descripcion}</elm:textoBusqueda></td>
+                            <td><elm:textoBusqueda busca="${params.search}"><g:fieldValue bean="${itemVisitaInstance}" field="tipo"/></elm:textoBusqueda></td>
                             
                         </tr>
                     </g:each>
                 </g:if>
                 <g:else>
                     <tr class="danger">
-                        <td class="text-center" colspan="4">
+                        <td class="text-center" colspan="3">
                             <g:if test="${params.search && params.search!= ''}">
                                 No se encontraron resultados para su búsqueda
                             </g:if>
@@ -74,16 +70,16 @@
             </tbody>
         </table>
 
-        <elm:pagination total="${hardwareInstanceCount}" params="${params}"/>
+        <elm:pagination total="${itemVisitaInstanceCount}" params="${params}"/>
 
         <script type="text/javascript">
             var id = null;
-            function submitFormHardware() {
-                var $form = $("#frmHardware");
-                var $btn = $("#dlgCreateEditHardware").find("#btnSave");
+            function submitFormItemVisita() {
+                var $form = $("#frmItemVisita");
+                var $btn = $("#dlgCreateEditItemVisita").find("#btnSave");
                 if ($form.valid()) {
                     $btn.replaceWith(spinner);
-                    openLoader("Guardando Hardware");
+                    openLoader("Guardando ItemVisita");
                     $.ajax({
                         type    : "POST",
                         url     : $form.attr("action"),
@@ -110,11 +106,11 @@
                 return false;
             } //else
             }
-            function deleteHardware(itemId) {
+            function deleteItemVisita(itemId) {
                 bootbox.dialog({
                     title   : "Alerta",
                     message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
-                              "¿Está seguro que desea eliminar el Hardware seleccionado? Esta acción no se puede deshacer.</p>",
+                              "¿Está seguro que desea eliminar el ItemVisita seleccionado? Esta acción no se puede deshacer.</p>",
                     buttons : {
                         cancelar : {
                             label     : "Cancelar",
@@ -126,10 +122,10 @@
                             label     : "<i class='fa fa-trash-o'></i> Eliminar",
                             className : "btn-danger",
                             callback  : function () {
-                                openLoader("Eliminando Hardware");
+                                openLoader("Eliminando ItemVisita");
                                 $.ajax({
                                     type    : "POST",
-                                    url     : '${createLink(controller:'hardware', action:'delete_ajax')}',
+                                    url     : '${createLink(controller:'itemVisita', action:'delete_ajax')}',
                                     data    : {
                                         id : itemId
                                     },
@@ -154,17 +150,17 @@
                     }
                 });
             }
-            function createEditHardware(id) {
+            function createEditItemVisita(id) {
                 var title = id ? "Editar" : "Crear";
                 var data = id ? { id: id } : {};
                 $.ajax({
                     type    : "POST",
-                    url     : "${createLink(controller:'hardware', action:'form_ajax')}",
+                    url     : "${createLink(controller:'itemVisita', action:'form_ajax')}",
                     data    : data,
                     success : function (msg) {
                         var b = bootbox.dialog({
-                            id      : "dlgCreateEditHardware",
-                            title   : title + " Hardware",
+                            id      : "dlgCreateEditItemVisita",
+                            title   : title + " ItemVisita",
                             
                             message : msg,
                             buttons : {
@@ -179,7 +175,7 @@
                                     label     : "<i class='fa fa-save'></i> Guardar",
                                     className : "btn-success",
                                     callback  : function () {
-                                        return submitFormHardware();
+                                        return submitFormItemVisita();
                                     } //callback
                                 } //guardar
                             } //buttons
@@ -191,16 +187,16 @@
                 }); //ajax
             } //createEdit
 
-            function verHardware(id) {
+            function verItemVisita(id) {
             $.ajax({
                     type    : "POST",
-                    url     : "${createLink(controller:'hardware', action:'show_ajax')}",
+                    url     : "${createLink(controller:'itemVisita', action:'show_ajax')}",
                     data    : {
                         id : id
                     },
                     success : function (msg) {
                         bootbox.dialog({
-                            title   : "Ver Hardware",
+                            title   : "Ver ItemVisita",
                             
                             message : msg,
                             buttons : {
@@ -219,7 +215,7 @@
             $(function () {
 
                 $(".btnCrear").click(function() {
-                    createEditHardware();
+                    createEditItemVisita();
                     return false;
                 });
 
@@ -234,7 +230,7 @@
                             icon   : "fa fa-search",
                             action : function ($element) {
                                 var id = $element.data("id");
-                                verHardware(id);
+                                verItemVisita(id);
                             }
                         },
                         editar   : {
@@ -242,7 +238,7 @@
                             icon   : "fa fa-pencil",
                             action : function ($element) {
                                 var id = $element.data("id");
-                                createEditHardware(id);
+                                createEditItemVisita(id);
                             }
                         },
                         eliminar : {
@@ -251,7 +247,7 @@
                             separator_before : true,
                             action           : function ($element) {
                                 var id = $element.data("id");
-                                deleteHardware(id);
+                                deleteItemVisita(id);
                             }
                         }
                     },

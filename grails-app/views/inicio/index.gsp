@@ -95,7 +95,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12" style="height: 720px;overflow: auto">
+        <div class="col-md-12" style="height: 565px;overflow: auto">
             <table class="table table-condensed">
                 <tbody>
                 <g:each in="${abiertos}" var="a">
@@ -122,6 +122,29 @@
             </div>
             <div class="col-md-7 texto-cuadro">
                 Cerrados
+            </div>
+        </div>
+    </div>
+    <div class="cuadro  azul">
+        <div class="row">
+            <div class="col-md-12 titulo">
+                Clientes
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 numero-cuadro" >
+                ${soporte.Cliente.countByEstado("1")}
+            </div>
+            <div class="col-md-7 texto-cuadro">
+                Activos
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 numero-cuadro" >
+                ${soporte.Cliente.countByEstado("0")}
+            </div>
+            <div class="col-md-7 texto-cuadro">
+                Inactivos
             </div>
         </div>
     </div>
@@ -181,30 +204,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="cuadro  azul">
-                <div class="row">
-                    <div class="col-md-12 titulo">
-                        Clientes
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 numero-cuadro" >
-                        ${soporte.Cliente.countByEstado("1")}
-                    </div>
-                    <div class="col-md-7 texto-cuadro">
-                        Activos
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5 numero-cuadro" >
-                        ${soporte.Cliente.countByEstado("0")}
-                    </div>
-                    <div class="col-md-7 texto-cuadro">
-                        Inactivos
-                    </div>
-                </div>
-            </div>
-            <div class="cuadro  verde" style="margin-top: 15px">
+            <div class="cuadro  verde">
                 <div class="row">
                     <div class="col-md-12 titulo">
                         Ticket mas antiguo sin resolver
@@ -217,16 +217,7 @@
                         ${masAntiguo?.fecha?.format("dd-MM-yyyy HH:mm")}
                     </div>
                 </div>
-                <g:if test="${duracionMasAntiguo}">
-                    <div class="row">
-                        <div class="col-md-5 numero-cuadro" >
-                            ${duracionMasAntiguo.days*24*60+duracionMasAntiguo.hours*60+duracionMasAntiguo.minutes}
-                        </div>
-                        <div class="col-md-7 texto-cuadro">
-                            Minutos
-                        </div>
-                    </div>
-                </g:if>
+
             </div>
             <div class="cuadro  naranja" style="margin-top: 15px;height: 140px">
                 <div class="row">
@@ -234,6 +225,7 @@
                         Tiempo promedio de respuesta
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-5 numero-cuadro" >
                         ${(int)(promedio/60)}
@@ -244,8 +236,37 @@
                 </div>
 
             </div>
+            <div class="cuadro  azul" style="margin-top: 15px;height: 140px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Ticket mas largo
+                    </div>
+                </div>
+                <g:if test="${ticketMasLargo.size()>0}">
+                    <div class="row">
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-md-12 texto-cuadro-cuadro" >
+                                #${ticketMasLargo["ticket"].id} - ${ticketMasLargo["ticket"]?.cliente?.nombre} -
+                                ${ticketMasLargo["ticket"]?.categoria?.descripcion} <br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 numero-cuadro" >
+                            ${ticketMasLargo["duracion"]}
+                        </div>
+                        <div class="col-md-7 texto-cuadro">
+                            Minutos
+                        </div>
+                    </div>
+                </g:if>
+
+            </div>
         </div>
+
     </div>
+
+
     <div class="row" style="margin-top: 20px">
         <div class="col-md-6">
             <div class="cuadro plomo " style="margin-top: 15px">

@@ -23,6 +23,10 @@
             <g:textField name="marca" maxlength="50" class="form-control " value="${hardwareInstance?.marca}"/>
         </elm:fieldRapido>
         
+        <elm:fieldRapido claseLabel="col-sm-2" label="Tipo" claseField="col-sm-6">
+            <g:select id="tipo" name="tipo.id" from="${soporte.TipoHardware.list()}" optionKey="id"  optionValue="descripcion" value="${hardwareInstance?.tipo?.id}" class="many-to-one form-control " noSelection="['null': '']"/>
+        </elm:fieldRapido>
+        
     </g:form>
         </div>
 

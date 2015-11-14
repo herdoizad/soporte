@@ -29,6 +29,21 @@
         width: 20px ;
         height: 20px;
     }
+    .P01{
+        background: #cff7ff;
+    }
+    .P02{
+        background: #cdffe0;
+    }
+    .P03{
+        background: #e6ffd1;
+    }
+    .P04{
+        background: #ffe9e2;
+    }
+    .P05{
+        background: #ffd1d5;
+    }
     </style>
 </head>
 <body>
@@ -192,7 +207,7 @@
                 </thead>
                 <tbody>
                 <g:each in="${hardware}" var="h">
-                    <tr>
+                    <tr class="${h.hardware.tipo?.codigo}">
                         <td>
                             <a href="#" class="edit-hard" iden="${h.id}">${h.hardware.nombre}</a>
                         </td>
@@ -299,6 +314,15 @@
                             callback  : function () {
                             }
                         },
+                        eliminar  : {
+                            id        : "btnDel",
+                            label     : "<i class='fa fa-trash'></i> Borrar",
+                            className : "btn-danger",
+                            callback  : function () {
+                                return deleteHardwareCliente(id);
+
+                            } //callback
+                        },
                         guardar  : {
                             id        : "btnSave",
                             label     : "<i class='fa fa-save'></i> Guardar",
@@ -325,7 +349,6 @@
             success : function (msg) {
                 bootbox.dialog({
                     title   : "Ver HardwareCliente",
-
                     message : msg,
                     buttons : {
                         ok : {
@@ -423,11 +446,21 @@
 
                     message : msg,
                     buttons : {
+
                         cancelar : {
                             label     : "Cancelar",
                             className : "btn-primary",
                             callback  : function () {
                             }
+                        },
+                        eliminar  : {
+                            id        : "btnDel",
+                            label     : "<i class='fa fa-trash'></i> Borrar",
+                            className : "btn-danger",
+                            callback  : function () {
+                                return deleteSoftwareCliente(id);
+
+                            } //callback
                         },
                         guardar  : {
                             id        : "btnSave",
@@ -437,6 +470,7 @@
                                 return submitFormSoftwareCliente();
                             } //callback
                         } //guardar
+
                     } //buttons
                 }); //dialog
                 setTimeout(function () {
@@ -467,6 +501,50 @@
             return false;
         } //else
     }
+    function deleteContactos(itemId) {
+        bootbox.dialog({
+            title   : "Alerta",
+            message : "<i class='fa fa-trash-o fa-3x pull-left text-danger text-shadow'></i><p>" +
+                    "¿Está seguro que desea eliminar el Contactos seleccionado? Esta acción no se puede deshacer.</p>",
+            buttons : {
+                cancelar : {
+                    label     : "Cancelar",
+                    className : "btn-primary",
+                    callback  : function () {
+                    }
+                },
+                eliminar : {
+                    label     : "<i class='fa fa-trash-o'></i> Eliminar",
+                    className : "btn-danger",
+                    callback  : function () {
+                        openLoader("Eliminando Contactos");
+                        $.ajax({
+                            type    : "POST",
+                            url     : '${createLink(controller:'contactos', action:'delete_ajax')}',
+                            data    : {
+                                id : itemId
+                            },
+                            success : function (msg) {
+                                var parts = msg.split("*");
+                                log(parts[1], parts[0] == "SUCCESS" ? "success" : "error"); // log(msg, type, title, hide)
+                                if (parts[0] == "SUCCESS") {
+                                    setTimeout(function() {
+                                        location.reload(true);
+                                    }, 1000);
+                                } else {
+                                    closeLoader();
+                                }
+                            },
+                            error: function() {
+                                log("Ha ocurrido un error interno", "Error");
+                                closeLoader();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
     function createEditContactos(id) {
         var title = id ? "Editar" : "Crear";
         var data = id ? { id: id } : {};
@@ -489,6 +567,15 @@
                             className : "btn-primary",
                             callback  : function () {
                             }
+                        },
+                        eliminar  : {
+                            id        : "btnDel",
+                            label     : "<i class='fa fa-trash'></i> Borrar",
+                            className : "btn-danger",
+                            callback  : function () {
+                                return deleteContactos(id);
+
+                            } //callback
                         },
                         guardar  : {
                             id        : "btnSave",

@@ -30,6 +30,8 @@
 					
 						<g:sortableColumn property="marca" title="${message(code: 'hardware.marca.label', default: 'Marca')}" />
 					
+						<th><g:message code="hardware.tipo.label" default="Tipo" /></th>
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -41,6 +43,8 @@
 						<td>${fieldValue(bean: hardwareInstance, field: "modelo")}</td>
 					
 						<td>${fieldValue(bean: hardwareInstance, field: "marca")}</td>
+					
+						<td>${fieldValue(bean: hardwareInstance, field: "tipo")}</td>
 					
 					</tr>
 				</g:each>

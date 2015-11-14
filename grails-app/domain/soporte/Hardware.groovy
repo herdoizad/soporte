@@ -5,7 +5,7 @@ class Hardware {
     String nombre
     String modelo
     String marca
-
+    TipoHardware tipo
     static auditable = [ignore: []]
 
     /**
@@ -21,6 +21,7 @@ class Hardware {
             nombre column: 'nombre'
             modelo column: 'modelo'
             marca column: 'marca'
+            tipo column: 'tipo'
         }
     }
 
@@ -29,5 +30,6 @@ class Hardware {
         nombre(size: 1..150)
         modelo(nullable: true, size: 1..20)
         marca(nullable: true, size: 1..50)
+        tipo(nullable: true)
     }
 }

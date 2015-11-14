@@ -15,7 +15,7 @@ class HardwareController extends Shield {
      * Acción que redirecciona a la lista (acción "list")
      */
     def index() {
-        redirect(action: "list", params: params)
+        redirect(action:"list", params: params)
     }
 
     /**
@@ -28,20 +28,20 @@ class HardwareController extends Shield {
         params = params.clone()
         params.max = params.max ? Math.min(params.max.toInteger(), 100) : 10
         params.offset = params.offset ?: 0
-        if (all) {
+        if(all) {
             params.remove("max")
             params.remove("offset")
         }
         def list
-        if (params.search) {
+        if(params.search) {
             def c = Hardware.createCriteria()
             list = c.list(params) {
                 or {
                     /* TODO: cambiar aqui segun sea necesario */
-
-                    ilike("marca", "%" + params.search + "%")
-                    ilike("modelo", "%" + params.search + "%")
-                    ilike("nombre", "%" + params.search + "%")
+                    
+                    ilike("marca", "%" + params.search + "%")  
+                    ilike("modelo", "%" + params.search + "%")  
+                    ilike("nombre", "%" + params.search + "%")  
                 }
             }
         } else {
@@ -67,9 +67,9 @@ class HardwareController extends Shield {
      * Acción llamada con ajax que muestra la información de un elemento particular
      */
     def show_ajax() {
-        if (params.id) {
+        if(params.id) {
             def hardwareInstance = Hardware.get(params.id)
-            if (!hardwareInstance) {
+            if(!hardwareInstance) {
                 render "ERROR*No se encontró Hardware."
                 return
             }
@@ -84,9 +84,9 @@ class HardwareController extends Shield {
      */
     def form_ajax() {
         def hardwareInstance = new Hardware()
-        if (params.id) {
+        if(params.id) {
             hardwareInstance = Hardware.get(params.id)
-            if (!hardwareInstance) {
+            if(!hardwareInstance) {
                 render "ERROR*No se encontró Hardware."
                 return
             }
@@ -100,15 +100,15 @@ class HardwareController extends Shield {
      */
     def save_ajax() {
         def hardwareInstance = new Hardware()
-        if (params.id) {
+        if(params.id) {
             hardwareInstance = Hardware.get(params.id)
-            if (!hardwareInstance) {
+            if(!hardwareInstance) {
                 render "ERROR*No se encontró Hardware."
                 return
             }
         }
         hardwareInstance.properties = params
-        if (!hardwareInstance.save(flush: true)) {
+        if(!hardwareInstance.save(flush: true)) {
             render "ERROR*Ha ocurrido un error al guardar Hardware: " + renderErrors(bean: hardwareInstance)
             return
         }
@@ -120,7 +120,7 @@ class HardwareController extends Shield {
      * Acción llamada con ajax que permite eliminar un elemento
      */
     def delete_ajax() {
-        if (params.id) {
+        if(params.id) {
             def hardwareInstance = Hardware.get(params.id)
             if (!hardwareInstance) {
                 render "ERROR*No se encontró Hardware."
@@ -139,5 +139,5 @@ class HardwareController extends Shield {
             return
         }
     } //delete para eliminar via ajax
-
+    
 }
