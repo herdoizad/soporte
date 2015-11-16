@@ -65,7 +65,7 @@
             <div class="col-md-3">Del ${contrato?.inicio?.format("dd-MM-yyyy")} Al ${contrato?.fin?.format("dd-MM-yyyy")}</div>
         </g:if>
         <div class="col-md-1"><label>Monto:</label></div>
-        <div class="col-md-1" style="text-align: right"><g:formatNumber number="${contrato?.valor}" type="currency"/></div>
+        <div class="col-md-1" style="text-align: right"><g:formatNumber number="${contrato?.valor}" type="currency" currencySymbol=""/></div>
         <div class="col-md-1">
             <a href="#" class="btn btn-info btn-sm" id="contratos"><i class="fa fa-pencil"></i> Contratos</a>
         </div>

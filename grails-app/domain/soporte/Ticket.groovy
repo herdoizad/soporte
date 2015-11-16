@@ -48,7 +48,7 @@ class Ticket {
 
 
     static constraints = {
-        descripcion(size: 1..200)
+        descripcion(size: 1..600)
         cierre(nullable: true)
         observaciones(size: 1..1024,nullable: true,blank: true)
         fuente(size: 1..1,nullable: true,blank: true)

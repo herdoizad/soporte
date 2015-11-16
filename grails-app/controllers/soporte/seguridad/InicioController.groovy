@@ -53,7 +53,7 @@ class InicioController extends Shield {
         def masAntiguo = null
         def duracionMasAntiguo = null
         def ticketMasLargo = [:]
-        def datosHS=[0,0]
+        def datosHS=[0,0,0]
         /*tickets por meses*/
         def meses ="['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']"
         def datosMeses=[0,0,0,0,0,0,0,0,0,0,0,0]
@@ -68,8 +68,10 @@ class InicioController extends Shield {
             /*Grafico de hardware vs software*/
             if(ticket.categoria.tipo=="H")
                 datosHS[0]++
-            else
+            if(ticket.categoria.tipo=="S")
                 datosHS[1]++
+            if(ticket.categoria.tipo=="F")
+                datosHS[2]++
             if(ticket.estado.codigo=="P02"){
                 use(groovy.time.TimeCategory) {
                     def duration = ticket.cierre-ticket.fecha
@@ -127,9 +129,16 @@ class InicioController extends Shield {
         clientes+="]"
 
 
+        /*Facturacion electronica*/
+        def ticketFe = null
+        abiertos.each {
+            if(it.categoria.tipo=="F")
+                ticketFe=it
+        }
+
         [abiertos:abiertos,hoyAbiertos:hoyAbiertos,hoyCerrados:hoyCerrados,totalDia:hoyAbiertos.size()+hoyCerrados.size(),masAntiguo:masAntiguo,duracionMasAntiguo:duracionMasAntiguo,ticketMasLargo:ticketMasLargo,
          cerrados:cerrados,categorias:categorias,datosCategorias:datosCategorias,datosHS:datosHS,clientes:clientes,datosClientes:datosClientes,meses:meses,datosMeses:datosMeses,semanaCerrados:semanaCerrados,
-         totalSemana:semanaAbiertos.size()+semanaCerrados.size(), pDia:(int)porcentajeDia,pSemana:(int)porcentajeSemana,pTotal:(int)pTotal,promedio:promedio]
+         totalSemana:semanaAbiertos.size()+semanaCerrados.size(), pDia:(int)porcentajeDia,pSemana:(int)porcentajeSemana,pTotal:(int)pTotal,promedio:promedio,ticketFe:ticketFe]
     }
 
 

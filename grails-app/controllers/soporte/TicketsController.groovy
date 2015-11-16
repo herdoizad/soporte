@@ -19,8 +19,8 @@ class TicketsController  extends Shield{
         def ticket = null
         if(params.id)
             ticket=Ticket.get(params.id)
-        println "max "+max
-        [max:max,min:min,ticket: ticket]
+        def categorias = ["S":"Software","H":"Hardware","F":"F. electrónica"]
+        [max:max,min:min,ticket: ticket,categorias:categorias]
     }
 
     def save_ajax(){
@@ -51,8 +51,8 @@ class TicketsController  extends Shield{
             fechaLimite = fechaLimite + ticket.categoria.tiempo.hours
         }
         def acciones = AccionTomada.findAllByTicket(ticket,[sort:"fecha"])
-
-        [ticket:ticket,fechaLimite:fechaLimite,accciones:acciones]
+        def categorias = ["S":"Software","H":"Hardware","F":"F. electrónica"]
+        [ticket:ticket,fechaLimite:fechaLimite,accciones:acciones,categorias:categorias]
     }
 
     def saveAccion_ajax(){

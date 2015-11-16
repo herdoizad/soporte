@@ -23,8 +23,7 @@
                 <label>Categoría:</label>
             </div>
             <div class="col-md-2">
-                <input type="checkbox" class="chk" id="tipo" name="tipo_chk" value="1" checked>
-                <input type="hidden" name="tipo" id="tipo-txt" value="1">
+                <g:select from="${categorias}" id="tipo" name="tipoCMB" value="${ticket?.categoria?.tipo}" class="form-control input-sm" optionKey="key" optionValue="value"/>
             </div>
             <div class="col-md-3" id="combo"></div>
         </div>
@@ -33,7 +32,7 @@
                 <label>Problema:</label>
             </div>
             <div class="col-md-10">
-                <textarea class="form-control input-sm required" name="descripcion" style="height: 200px;resize: vertical;">${ticket?.descripcion}</textarea>
+                <textarea class="form-control input-sm required" maxlength="600" name="descripcion" style="height: 200px;resize: vertical;">${ticket?.descripcion}</textarea>
             </div>
         </div>
         <div class="row fila">
@@ -72,9 +71,7 @@
 </elm:container>
 <script>
     function cargaCombos(){
-            var tipo = "S"
-            if( !$(".chk").bootstrapSwitch("state"))
-                tipo="H"
+            var tipo =$("#tipo").val()
             $.ajax({
                 type: "POST",
                 url: "${createLink(controller:'tickets', action:'comboCategoria_ajax')}",
@@ -122,14 +119,8 @@
         }
 
     });
-    $('.select').combobox();
-    $(".chk").bootstrapSwitch({
-        size:'mini',
-        onText:"Software",
-        offText:"Hardware",
-        offColor:"primary",
-        onSwitchChange:cargaCombos
-    });
+    $('#tipo').change(cargaCombos);
+
     $("#guardar").click(function(){
         if($(".frm").valid()){
             $(".frm").submit()

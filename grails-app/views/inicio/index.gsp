@@ -38,6 +38,10 @@
         background: #23C6C8;
         color: #fff;
     }
+    .verde-claro{
+        background: #cbf005;
+        color: #000;
+    }
     .verde{
         background: #1AB394;
         color: #fff;
@@ -95,7 +99,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12" style="height: 565px;overflow: auto">
+        <div class="col-md-12" style="height: 585px;overflow: auto">
             <table class="table table-condensed">
                 <tbody>
                 <g:each in="${abiertos}" var="a">
@@ -155,7 +159,7 @@
             <div class="cuadro  verde-azul">
                 <div class="row">
                     <div class="col-md-12 titulo">
-                        Resumen
+                        Resumen de tickets resueltos
                     </div>
                 </div>
                 <div class="row" style="margin-top: 10px;text-align: center">
@@ -219,13 +223,12 @@
                 </div>
 
             </div>
-            <div class="cuadro  naranja" style="margin-top: 15px;height: 140px">
+            <div class="cuadro  naranja" style="margin-top: 15px;height: 100px">
                 <div class="row">
                     <div class="col-md-12 titulo">
                         Tiempo promedio de respuesta
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-5 numero-cuadro" >
                         ${(int)(promedio/60)}
@@ -262,6 +265,24 @@
                 </g:if>
 
             </div>
+            <div class="cuadro  verde-claro" style="margin-top: 15px;height: 90px">
+                <div class="row">
+                    <div class="col-md-12 titulo">
+                        Tickets Facturación Electrónica
+                    </div>
+                </div>
+                <g:if test="${ticketFe}">
+                    <div class="row">
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-md-12 texto-cuadro-cuadro" >
+                                #${ticketFe.id} - ${ticketFe.cliente?.nombre} -
+                                ${ticketFe?.categoria?.descripcion} <span style="color: red">Abierto</span>
+                            </div>
+                        </div>
+                    </div>
+                </g:if>
+
+            </div>
         </div>
 
     </div>
@@ -292,6 +313,12 @@
                     </div>
                     <div class="col-md-10"> Software ${(datosHS[1]*100/datosHS.sum()).toDouble().round(2)}%</div>
                 </div>
+                <div class="row">
+                    <div class="col-md-1" style="background:#F8AC59 ">
+                        &nbsp;
+                    </div>
+                    <div class="col-md-10"> F. Electrónica ${(datosHS[2]*100/datosHS.sum()).toDouble().round(2)}%</div>
+                </div>
             </div>
         </div>
         <div class="col-md-6">
@@ -303,7 +330,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <canvas id="chartRadar" style="width: 100%;height: 345px"></canvas>
+                        <canvas id="chartRadar" style="width: 100%;height: 365px"></canvas>
                     </div>
                 </div>
             </div>
@@ -384,6 +411,13 @@
             color: "#46BFBD",
             highlight: "#5AD3D1",
             label: "Software"
+        }
+        ,
+        {
+            value: ${datosHS[2]},
+            color: "#F8AC59",
+            highlight: "#F8AC59",
+            label: "F. Electrónica"
         }
     ]
     myNewChart = new Chart(ctx).Pie(data);
