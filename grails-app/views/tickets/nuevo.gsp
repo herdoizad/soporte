@@ -82,6 +82,7 @@
                 } //success
             }); //ajax
     }
+
     var validator = $(".frm").validate({
         errorClass     : "help-block",
         errorPlacement : function (error, element) {

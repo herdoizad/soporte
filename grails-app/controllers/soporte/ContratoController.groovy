@@ -1,5 +1,6 @@
 package soporte
 
+
 import org.springframework.dao.DataIntegrityViolationException
 import soporte.seguridad.Shield
 
@@ -10,7 +11,7 @@ import soporte.seguridad.Shield
 class ContratoController extends Shield {
 
     static allowedMethods = [save_ajax: "POST", delete_ajax: "POST"]
-
+    def mailService
     /**
      * Acción que redirecciona a la lista (acción "list")
      */
@@ -204,6 +205,19 @@ class ContratoController extends Shield {
         }
         println "contrato "+contrato
         [cliente:cliente,contratoInstance: contrato]
+    }
+
+    def enviarEmailContratoVencido(Contrato contrato){
+        def email = "valentinsvt@hotmail.com"
+//        email=contrato.cliente.email
+        mailService.sendMail {
+            multipart true
+            to email
+            subject "Control system - AVISO DE RENOVACIÓN DE SERVICIO"
+            body( view:"mailContrato",
+                    model:[cliente: contrato.cliente,contrato:contrato])
+            inline 'logo','image/png',grailsApplication.mainContext.getResource('/images/logo-login.png').getFile().readBytes()
+        }
     }
 
 }

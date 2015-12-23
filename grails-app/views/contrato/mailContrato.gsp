@@ -1,7 +1,7 @@
 <%@ page contentType="text/html"%>
 <html>
 <head>
-    <title>El ticket ${ticket.id} ha sido cerrado</title>
+    <title>AVISO DE RENOVACIÓN DE SERVICIO</title>
 
 </head>
 <body>
@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td colspan="2" style="background: #82A640;color: #ffffff;font-weight: bold;padding-left: 10px;width: 600px">
-            El ticket ${ticket.id} ha sido cerrado
+            AVISO DE RENOVACIÓN DE SERVICIO
         </td>
     </tr>
     <tr>
@@ -33,7 +33,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            Problema: ${ticket.descripcion}
+            Estimado cliente:
         </td>
     </tr>
     <tr>
@@ -41,7 +41,13 @@
     </tr>
     <tr>
         <td colspan="2">
-            Fecha: ${ticket.fecha.format("dd-MM-yyyy HH:mm")}
+            Le recordamos  el vencimiento de su contrato correspondiente a la estación:<br/>
+            <b>${cliente.nombre}</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            Sirvace renovar su contrato antes del ${contrato.fin.format("dd-MM-yyyy")}
         </td>
     </tr>
     <tr>
@@ -49,7 +55,8 @@
     </tr>
     <tr>
         <td colspan="2">
-            Estado: <b>Solucionado</b>
+            Si al momento de recibir este aviso, usted ya ha renovado el servicio
+            hacer caso omiso a este documento.
         </td>
     </tr>
     <tr>
@@ -57,15 +64,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            Fecha de cierre: <b>${ticket.cierre.format("dd-MM-yyyy HH:mm")}</b>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2"  style="height: 10px; ">&nbsp;</td>
-    </tr>
-    <tr>
-        <td colspan="2">
-            Usuario que lo atendio: ${ticket.usuario}
+            Agradecemos su cordial atención.
         </td>
     </tr>
 

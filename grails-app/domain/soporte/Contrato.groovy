@@ -9,6 +9,7 @@ class Contrato {
     String path
     String numero
     Double valor
+    String estadoEmail
     static auditable = [ignore: []]
 
     /**
@@ -28,6 +29,7 @@ class Contrato {
             path column:'path'
             numero column:'numero'
             valor column: 'valor'
+            estadoEmail column: 'estado_email'
         }
     }
 
@@ -36,5 +38,6 @@ class Contrato {
         fin(nullable: true,blank:true)
         path(nullable: true,blank:true,size: 1..150)
         numero(nullable: true,blank:true,size: 1..20)
+        estadoEmail(nullable: true,blank: true,size: 1..1)
     }
 }
