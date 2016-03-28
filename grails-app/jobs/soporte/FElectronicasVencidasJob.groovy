@@ -16,7 +16,7 @@ class FElectronicasVencidasJob {
         def now = new Date()
         def compare = now.plus(30)
 
-        def tipo = TipoDeContrato.findAllById(4);
+        def tipo = TipoDeContrato.findById(4)
 
         Contrato.findAllByTipoAndFinBetweenAndEstadoEmailIsNull(tipo,now,compare).each {contrato->
             println "enviando email a: "+contrato.cliente.nombre
