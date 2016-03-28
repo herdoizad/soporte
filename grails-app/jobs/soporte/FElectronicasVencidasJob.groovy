@@ -16,10 +16,10 @@ class FElectronicasVencidasJob {
         def now = new Date()
         def compare = now.plus(30)
 
-        def tipo = TipoDeContrato.find(4);
+        def tipo = TipoDeContrato.findAllById(4);
 
         Contrato.findAllByTipoAndFinBetweenAndEstadoEmailIsNull(tipo,now,compare).each {contrato->
-            println "enviando email a: "+contrato.cliente
+            println "enviando email a: "+contrato.cliente.nombre
             def emailcc = "gabriela.silva@petroleosyservicios.com"
             def cuerpo =
                     "<table style=\"width: 650px;height: 60px;border: none;border-collapse: collapse\">\n" +
@@ -43,7 +43,7 @@ class FElectronicasVencidasJob {
                             "    </tr>\n" +
                             "    <tr>\n" +
                             "        <td colspan=\"2\" style=\"font-weight: bold;padding-left: 10px;width: 600px\">\n" +
-                            "            <h1 style='color:red'>AVISO DE RENOVACIÓN DE CONTRATO DE FACTURA ELECTRÓNICA</h1>\n" +
+                            "            <h1 style='color:red'>AVISO DE RENOVACIÓN DE CONTRATO DE HOSPEDAJE DE FACTURAS ELECTRÓNICAS</h1>\n" +
                             "        </td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
@@ -62,13 +62,8 @@ class FElectronicasVencidasJob {
                             "    </tr>\n" +
                             "    <tr>\n" +
                             "        <td colspan=\"2\">\n" +
-                            "            Le recordamos  el vencimiento de su contrato correspondiente a la estación:<br/>\n" +
+                            "            Le recordamos el vencimiento de su contrato: ${contrato.fin.format('dd-MM-yyyy')}, que corresponde a la estación:<br/>\n" +
                             "            <b>${contrato.cliente.nombre}</b>\n" +
-                            "        </td>\n" +
-                            "    </tr>\n" +
-                            "    <tr>\n" +
-                            "        <td colspan=\"2\">\n" +
-                            "            Sirvase renovar su contrato antes del ${contrato.fin.format('dd-MM-yyyy')}\n" +
                             "        </td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
@@ -76,8 +71,8 @@ class FElectronicasVencidasJob {
                             "    </tr>\n" +
                             "    <tr>\n" +
                             "        <td colspan=\"2\">\n" +
-                            "            Si al momento de recibir este aviso, usted ya ha renovado el servicio o ha firmado\n" +
-                            "            el contrato de renovación automática, favor hacer caso omiso a este documento.\n" +
+                            "            Si al momento de recibir este aviso, usted ya ha firmado el contrato de renovación\n" +
+                            "            automática, su factura electrónica le llegará en los próximos días.\n" +
                             "        </td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
@@ -96,11 +91,12 @@ class FElectronicasVencidasJob {
                             "\n" +
                             "</table>\n" +
                             "\n"
-            email=contrato.cliente.email
+            def email=contrato.cliente.email
+            //def email="david.herdoiza@petroleosyservicios.com"
             mailService.sendMail {
                 to email
                 cc emailcc
-                subject "Control system - AVISO DE RENOVACIÓN DE FACTURA ELECTRÓNICA"
+                subject "Control system - Renovación Hospedaje Facturas Electrónicas"
                 html cuerpo
             }
         }

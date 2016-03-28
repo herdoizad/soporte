@@ -18,10 +18,10 @@ class ContratosVencidosJob {
         def now = new Date()
         def compare = now.plus(30)
 
-        def tipo = TipoDeContrato.find(1);
+        def tipo = TipoDeContrato.findAllById(1);
 
         Contrato.findAllByTipoAndFinBetweenAndEstadoEmailIsNull(tipo,now,compare).each {contrato->
-            println "enviando email a: "+contrato.cliente
+            println "enviando email a: "+contrato.cliente.nombre
             def emailcc = "gabriela.silva@petroleosyservicios.com"
             def cuerpo =
                     "<table style=\"width: 650px;height: 60px;border: none;border-collapse: collapse\">\n" +
@@ -98,7 +98,7 @@ class ContratosVencidosJob {
                             "\n" +
                             "</table>\n" +
                             "\n"
-            email=contrato.cliente.email
+            def email=contrato.cliente.email
             mailService.sendMail {
                 to email
                 cc emailcc
