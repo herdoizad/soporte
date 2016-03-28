@@ -1,24 +1,22 @@
 package soporte
 
-
 import org.codehaus.groovy.grails.web.context.ServletContextHolder
 import org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes
 
-
-class ContratosVencidosJob {
+class FElectronicasVencidasJob {
     static triggers = {
-        simple name: 'contratosJob', startDelay: 0, repeatInterval: 1000*60*60*24
+        simple name: 'felectronicasJob', startDelay: 1000*5, repeatInterval: 1000*60*60*24
     }
 
     def mailService
 
     def execute() {
         // execute job
-        println "contratos job "
+        println "efacturas job "
         def now = new Date()
         def compare = now.plus(30)
 
-        def tipo = TipoDeContrato.find(1);
+        def tipo = TipoDeContrato.find(4);
 
         Contrato.findAllByTipoAndFinBetweenAndEstadoEmailIsNull(tipo,now,compare).each {contrato->
             println "enviando email a: "+contrato.cliente
@@ -35,7 +33,7 @@ class ContratosVencidosJob {
                             "    <tr>\n" +
                             "        <td colspan=\"2\"  style=\"height: 60px\">\n" +
                             "            <h2 style=\"margin-top: 0px;width: 310px;text-align: center;font-weight: bold;font-size: 16px\">\n" +
-                            "                PETROLEOS Y SERVICIOS<br/>\n" +
+                            "                PETRÓLEOS Y SERVICIOS<br/>\n" +
                             "            </h2>\n" +
                             "            Av. 6 de Diciembre N30-182 y Alpallana, Quito (593) (2) 381-9680\n" +
                             "        </td>\n" +
@@ -45,7 +43,7 @@ class ContratosVencidosJob {
                             "    </tr>\n" +
                             "    <tr>\n" +
                             "        <td colspan=\"2\" style=\"font-weight: bold;padding-left: 10px;width: 600px\">\n" +
-                            "            <h1 style='color:red'>AVISO DE RENOVACIÓN DE SERVICIO</h1>\n" +
+                            "            <h1 style='color:red'>AVISO DE RENOVACIÓN DE CONTRATO DE FACTURA ELECTRÓNICA</h1>\n" +
                             "        </td>\n" +
                             "    </tr>\n" +
                             "    <tr>\n" +
@@ -102,7 +100,7 @@ class ContratosVencidosJob {
             mailService.sendMail {
                 to email
                 cc emailcc
-                subject "Control system - AVISO DE RENOVACIÓN DE SERVICIO"
+                subject "Control system - AVISO DE RENOVACIÓN DE FACTURA ELECTRÓNICA"
                 html cuerpo
             }
         }
