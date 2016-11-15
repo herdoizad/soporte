@@ -101,7 +101,7 @@ class ContratosVencidosJob {
             def email=contrato.cliente.email
             mailService.sendMail {
                 to email
-                cc emailcc
+                cc "gabriela.silva@petroleosyservicios.com","nataly.carrera@petroleosyservicios.com","david.herdoiza@petroleosyservicios.com"
                 subject "Control system - AVISO DE RENOVACIÓN DE SERVICIO"
                 html cuerpo
             }
