@@ -95,7 +95,7 @@ class FElectronicasVencidasJob {
             //def email="david.herdoiza@petroleosyservicios.com"
             mailService.sendMail {
                 to email
-                cc "gabriela.silva@petroleosyservicios.com","nataly.carrera@petroleosyservicios.com","david.herdoiza@petroleosyservicios.com"
+                cc "gabriela.silva@petroleosyservicios.com","nataly.carrera@petroleosyservicios.com"
                 subject "Control system - Renovación Hospedaje Facturas Electrónicas"
                 html cuerpo
             }
